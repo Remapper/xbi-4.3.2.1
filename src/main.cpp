@@ -2260,8 +2260,8 @@ int64_t GetBlockValue(int nHeight)
     int64_t nSubsidy = 0;
 
     if (Params().NetworkID() == CBaseChainParams::TESTNET) {
-        if (nHeight < 200 && nHeight > 0)
-            return 2500 * COIN;
+        if (nHeight < 1000 && nHeight > 0)
+            return 2100 * COIN; // Testnet: 2100 x 1000 blocks (pow) = 2.1M Premine.
     }
 
     if (nHeight == 92473) {
@@ -2309,7 +2309,7 @@ int64_t GetMasternodePayment(int nHeight, int64_t blockValue, int nMasternodeCou
 
 	//Testnet
     if (Params().NetworkID() == CBaseChainParams::TESTNET) {
-        if (nHeight < 200)
+        if (nHeight < 200) // Masternode payments start at block 200 in testnet.
             return 0;
     }
 
@@ -2339,7 +2339,7 @@ bool IsInitialBlockDownload()
     if (lockIBDState)
         return false;
     bool state = (chainActive.Height() < pindexBestHeader->nHeight - 24 * 6 ||
-                  pindexBestHeader->GetBlockTime() < GetTime() - 6 * 60 * 60) && chainActive.Height() > 92453; // ~144 blocks behind -> 2 x fork detection time
+                  pindexBestHeader->GetBlockTime() < GetTime() - 6 * 60 * 60); // ~144 blocks behind -> 2 x fork detection time
     if (!state)
         lockIBDState = true;
     return state;

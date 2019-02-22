@@ -235,63 +235,91 @@ public:
     {
         networkID = CBaseChainParams::TESTNET;
         strNetworkID = "test";
-        pchMessageStart[0] = 0x45;
-        pchMessageStart[1] = 0x76;
-        pchMessageStart[2] = 0x65;
-        pchMessageStart[3] = 0xba;
+        pchMessageStart[0] = 0xa1;
+        pchMessageStart[1] = 0xbf;
+        pchMessageStart[2] = 0xc5;
+        pchMessageStart[3] = 0x86;
         vAlertPubKey = ParseHex("000010e83b2703ccf322f7dbd62dd5855ac7c10bd055814ce121ba32607d573b8810c02c0582aed05b4deb9c4b77b26d92428c61256cd42774babea0a073b2ed0c9");
-        nDefaultPort = 51474;
+        nDefaultPort = 2020;
         nEnforceBlockUpgradeMajority = 51;
         nRejectBlockOutdatedMajority = 75;
         nToCheckBlockUpgradeMajority = 100;
         nMinerThreads = 0;
         nTargetTimespan = 1 * 60; // XBI: 1 day
         nTargetSpacing = 1 * 60;  // XBI: 1 minute
-        nLastPOWBlock = 200;
-        nMaturity = 15;
+        nLastPOWBlock = 1000;
+        nMaturity = 5;
         nMasternodeCountDrift = 4;
-        nModifierUpdateBlock = 51197; //approx Mon, 17 Apr 2017 04:00:00 GMT
-        nMaxMoneyOut = 43199500 * COIN;
-        nZerocoinStartHeight = 201576;
-        nZerocoinStartTime = 1524711188;
+        nModifierUpdateBlock = 9999999; //approx Mon, 17 Apr 2017 04:00:00 GMT
+        nMaxMoneyOut = 21000000 * COIN;
+        nZerocoinStartHeight = 9999999;
+        nZerocoinStartTime = 1550899999;
         nBlockEnforceSerialRange = 1; //Enforce serial range starting this block
-        nBlockRecalculateAccumulators = 9908000; //Trigger a recalculation of accumulators
-        nBlockFirstFraudulent = 9891737; //First block that bad serials emerged
-        nBlockLastGoodCheckpoint = 9891730; //Last valid accumulator checkpoint
+        nBlockRecalculateAccumulators = ~1; //Trigger a recalculation of accumulators
+        nBlockFirstFraudulent = ~1; //First block that bad serials emerged
+        nBlockLastGoodCheckpoint = ~1; //Last valid accumulator checkpoint
         
         //! Modify the testnet genesis block so the timestamp is valid for a later start.
-        genesis.nTime = 1515616140;
-        genesis.nNonce = 79855;
+        genesis.nTime = 1550846565;
+        genesis.nNonce = 0;
+		
+		if (true && genesis.GetHash() != hashGenesisBlock)
+                                                           {
+                                                               printf("Searching for genesis block...\n");
+                                                               uint256 hashTarget = CBigNum().SetCompact(genesis.nBits).getuint256();
+                                                               uint256 thash;
+                                           
+                                                               while (true)
+                                                               {
+                                                                   thash = genesis.GetHash();
+                                                                   if (thash <= hashTarget)
+                                                                       break;
+                                                                   if ((genesis.nNonce & 0xFFF) == 0)
+                                                                   {
+                                                                       printf("nonce %08X: hash = %s (target = %s)\n", genesis.nNonce, thash.ToString().c_str(), hashTarget.ToString().c_str());
+                                                                   }
+                                                                   ++genesis.nNonce;
+                                                                   if (genesis.nNonce == 0)
+                                                                   {
+                                                                       printf("NONCE WRAPPED, incrementing time\n");
+                                                                       ++genesis.nTime;
+                                                                   }
+                                                               }
+                                                               printf("genesis.nTime = %u \n", genesis.nTime);
+                                                               printf("genesis.nNonce = %u \n", genesis.nNonce);
+                                                               printf("genesis.nVersion = %u \n", genesis.nVersion);
+                                                               printf("genesis.GetHash = %s\n", genesis.GetHash().ToString().c_str()); //first this, then comment this line out and uncomment the one under.
+                                                               printf("genesis.hashMerkleRoot = %s \n", genesis.hashMerkleRoot.ToString().c_str()); //improvised. worked for me, to find merkle root
+                                           
+                                                           }
 
 	    hashGenesisBlock = genesis.GetHash();
-        //assert(hashGenesisBlock == uint256("0x000007cff63ef602a51bf074e384b3516f0dd202f14d52f7c8c9b1af9423ab2e"));
+        assert(hashGenesisBlock == uint256("0x"));
 
         vFixedSeeds.clear();
         vSeeds.clear();
-	vSeeds.push_back(CDNSSeedData("45.77.66.151", "45.77.66.151"));         // Frankfurt
-	vSeeds.push_back(CDNSSeedData("199.247.24.242", "199.247.24.242"));     // Amsterdam
-	vSeeds.push_back(CDNSSeedData("95.179.198.223", "95.179.198.223"));     // London
-	vSeeds.push_back(CDNSSeedData("45.77.21.46", "45.77.21.46"));           // Tokyo
-	vSeeds.push_back(CDNSSeedData("104.238.189.176", "104.238.189.176"));   // Paris
-	vSeeds.push_back(CDNSSeedData("108.61.185.148", "108.61.185.148"));     // Sydney
+	//vSeeds.push_back(CDNSSeedData("45.77.66.151", "45.77.66.151"));         // Frankfurt
+	//vSeeds.push_back(CDNSSeedData("199.247.24.242", "199.247.24.242"));     // Amsterdam
+	//vSeeds.push_back(CDNSSeedData("95.179.198.223", "95.179.198.223"));     // London
+	//vSeeds.push_back(CDNSSeedData("45.77.21.46", "45.77.21.46"));           // Tokyo
+	//vSeeds.push_back(CDNSSeedData("104.238.189.176", "104.238.189.176"));   // Paris
+	//vSeeds.push_back(CDNSSeedData("108.61.185.148", "108.61.185.148"));     // Sydney
     
-    vSeeds.push_back(CDNSSeedData("45.32.134.213", "45.32.134.213"));       // Silicon Valley
-	vSeeds.push_back(CDNSSeedData("45.76.8.202", "45.76.8.202"));           // New Jersey
-	vSeeds.push_back(CDNSSeedData("149.28.13.176", "149.28.13.176"));       // Seattle
-	vSeeds.push_back(CDNSSeedData("95.179.232.26", "95.179.232.26"));       // London 2
-	vSeeds.push_back(CDNSSeedData("149.28.31.212", "149.28.31.212"));       // Tokyo 2
-	vSeeds.push_back(CDNSSeedData("45.63.27.217", "45.63.27.217"));         // Sydney 2
+    //vSeeds.push_back(CDNSSeedData("45.32.134.213", "45.32.134.213"));       // Silicon Valley
+	//vSeeds.push_back(CDNSSeedData("45.76.8.202", "45.76.8.202"));           // New Jersey
+	//vSeeds.push_back(CDNSSeedData("149.28.13.176", "149.28.13.176"));       // Seattle
+	//vSeeds.push_back(CDNSSeedData("95.179.232.26", "95.179.232.26"));       // London 2
+	//vSeeds.push_back(CDNSSeedData("149.28.31.212", "149.28.31.212"));       // Tokyo 2
+	//vSeeds.push_back(CDNSSeedData("45.63.27.217", "45.63.27.217"));         // Sydney 2
 
 
-        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 139); // Testnet xbi addresses start with 'x' or 'y'
-        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 19);  // Testnet xbi script addresses start with '8' or '9'
-        base58Prefixes[SECRET_KEY] = std::vector<unsigned char>(1, 239);     // Testnet private keys start with '9' or 'c' (Bitcoin defaults)
-        // Testnet xbi BIP32 pubkeys start with 'DRKV'
-        base58Prefixes[EXT_PUBLIC_KEY] = boost::assign::list_of(0x3a)(0x80)(0x61)(0xa0).convert_to_container<std::vector<unsigned char> >();
-        // Testnet xbi BIP32 prvkeys start with 'DRKP'
-        base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x3a)(0x80)(0x58)(0x37).convert_to_container<std::vector<unsigned char> >();
-        // Testnet xbi BIP44 coin type is '1' (All coin's testnet default)
-        base58Prefixes[EXT_COIN_TYPE] = boost::assign::list_of(0x80)(0x00)(0x00)(0x01).convert_to_container<std::vector<unsigned char> >();
+        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 18);
+        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 30);
+        base58Prefixes[SECRET_KEY] = std::vector<unsigned char>(1, 212);
+        base58Prefixes[EXT_PUBLIC_KEY] = boost::assign::list_of(0x02)(0x2D)(0x25)(0x33).convert_to_container<std::vector<unsigned char> >();
+        base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x02)(0x21)(0x31)(0x2B).convert_to_container<std::vector<unsigned char> >();
+        // 	BIP44 coin type is from https://github.com/satoshilabs/slips/blob/master/slip-0044.md
+        base58Prefixes[EXT_COIN_TYPE] = boost::assign::list_of(0x80)(0x00)(0x00)(0x77).convert_to_container<std::vector<unsigned char> >();
 
         convertSeed6(vFixedSeeds, pnSeed6_test, ARRAYLEN(pnSeed6_test));
 
@@ -305,7 +333,7 @@ public:
 
         nPoolMaxTransactions = 2;
         //strSporkKey = "04188441e39d99aa69068ee07d26980f459b84465bbd765c6ee15d1aec5b76b5aebb01b24be184a1d3a12af61276549d96cc9499d909f8afc183132837d18d643d";
-        strSporkKey = "0476fcb1fcfbb1b2a2fbba629102689d83dc66c2703d44b1314197ef42e64b6f66b7ec369b6df3d95cf6595c4cdd83907251f4c75d939809dabb17dad3196bf608";
+        strSporkKey = "04738977ca30f52718acd8888ca572f045e904918b491316cf5c157ac6333efad512fc2a6e302479fed84729b74f7142ae9671aec696039f04b02c9a38a736b001";
         //updated by datber 2018
         strObfuscationPoolDummyAddress = "xp87cG8UEQgzs1Bk67Yk884C7pnQfAeo7q";
         nStartMasternodePayments = 1420837558; //Fri, 09 Jan 2015 21:05:58 GMT
