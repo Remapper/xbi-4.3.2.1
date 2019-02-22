@@ -250,9 +250,9 @@ public:
         nLastPOWBlock = 1000;
         nMaturity = 5;
         nMasternodeCountDrift = 4;
-        nModifierUpdateBlock = 9999999; //approx Mon, 17 Apr 2017 04:00:00 GMT
+        nModifierUpdateBlock = 99999; //approx Mon, 17 Apr 2017 04:00:00 GMT
         nMaxMoneyOut = 21000000 * COIN;
-        nZerocoinStartHeight = 9999999;
+        nZerocoinStartHeight = 99999;
         nZerocoinStartTime = 1550899999;
         nBlockEnforceSerialRange = 1; //Enforce serial range starting this block
         nBlockRecalculateAccumulators = ~1; //Trigger a recalculation of accumulators
@@ -261,56 +261,19 @@ public:
         
         //! Modify the testnet genesis block so the timestamp is valid for a later start.
         genesis.nTime = 1550846565;
-        genesis.nNonce = 0;
+        genesis.nNonce = 1616868;
 		
-		if (true && genesis.GetHash() != hashGenesisBlock)
-                                                           {
-                                                               printf("Searching for genesis block...\n");
-                                                               uint256 hashTarget = CBigNum().SetCompact(genesis.nBits).getuint256();
-                                                               uint256 thash;
-                                           
-                                                               while (true)
-                                                               {
-                                                                   thash = genesis.GetHash();
-                                                                   if (thash <= hashTarget)
-                                                                       break;
-                                                                   if ((genesis.nNonce & 0xFFF) == 0)
-                                                                   {
-                                                                       printf("nonce %08X: hash = %s (target = %s)\n", genesis.nNonce, thash.ToString().c_str(), hashTarget.ToString().c_str());
-                                                                   }
-                                                                   ++genesis.nNonce;
-                                                                   if (genesis.nNonce == 0)
-                                                                   {
-                                                                       printf("NONCE WRAPPED, incrementing time\n");
-                                                                       ++genesis.nTime;
-                                                                   }
-                                                               }
-                                                               printf("genesis.nTime = %u \n", genesis.nTime);
-                                                               printf("genesis.nNonce = %u \n", genesis.nNonce);
-                                                               printf("genesis.nVersion = %u \n", genesis.nVersion);
-                                                               printf("genesis.GetHash = %s\n", genesis.GetHash().ToString().c_str()); //first this, then comment this line out and uncomment the one under.
-                                                               printf("genesis.hashMerkleRoot = %s \n", genesis.hashMerkleRoot.ToString().c_str()); //improvised. worked for me, to find merkle root
-                                           
-                                                           }
+		
 
 	    hashGenesisBlock = genesis.GetHash();
-        assert(hashGenesisBlock == uint256("0x"));
+        assert(hashGenesisBlock == uint256("0x00000a117e35a643bf0d32676a201c4f026b08bde09ce104e57b092b0b1d55a3"));
 
         vFixedSeeds.clear();
         vSeeds.clear();
-	//vSeeds.push_back(CDNSSeedData("45.77.66.151", "45.77.66.151"));         // Frankfurt
-	//vSeeds.push_back(CDNSSeedData("199.247.24.242", "199.247.24.242"));     // Amsterdam
-	//vSeeds.push_back(CDNSSeedData("95.179.198.223", "95.179.198.223"));     // London
-	//vSeeds.push_back(CDNSSeedData("45.77.21.46", "45.77.21.46"));           // Tokyo
-	//vSeeds.push_back(CDNSSeedData("104.238.189.176", "104.238.189.176"));   // Paris
-	//vSeeds.push_back(CDNSSeedData("108.61.185.148", "108.61.185.148"));     // Sydney
-    
-    //vSeeds.push_back(CDNSSeedData("45.32.134.213", "45.32.134.213"));       // Silicon Valley
-	//vSeeds.push_back(CDNSSeedData("45.76.8.202", "45.76.8.202"));           // New Jersey
-	//vSeeds.push_back(CDNSSeedData("149.28.13.176", "149.28.13.176"));       // Seattle
-	//vSeeds.push_back(CDNSSeedData("95.179.232.26", "95.179.232.26"));       // London 2
-	//vSeeds.push_back(CDNSSeedData("149.28.31.212", "149.28.31.212"));       // Tokyo 2
-	//vSeeds.push_back(CDNSSeedData("45.63.27.217", "45.63.27.217"));         // Sydney 2
+		vSeeds.push_back(CDNSSeedData("144.202.0.206", "144.202.0.206"));         // Remapper 1
+		vSeeds.push_back(CDNSSeedData("209.250.241.176", "209.250.241.176"));     // Remapper 2
+		vSeeds.push_back(CDNSSeedData("45.32.149.219", "45.32.149.219"));         // Remapper 3
+	
 
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 18);
