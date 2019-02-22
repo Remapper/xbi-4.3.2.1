@@ -270,9 +270,12 @@ public:
 
         vFixedSeeds.clear();
         vSeeds.clear();
-		vSeeds.push_back(CDNSSeedData("144.202.0.206", "144.202.0.206"));         // Remapper 1
-		vSeeds.push_back(CDNSSeedData("209.250.241.176", "209.250.241.176"));     // Remapper 2
-		vSeeds.push_back(CDNSSeedData("45.32.149.219", "45.32.149.219"));         // Remapper 3
+	vSeeds.push_back(CDNSSeedData("144.202.0.206", "144.202.0.206"));         // Remapper 1
+	vSeeds.push_back(CDNSSeedData("209.250.241.176", "209.250.241.176"));     // Remapper 2
+	vSeeds.push_back(CDNSSeedData("45.32.149.219", "45.32.149.219"));         // Remapper 3
+	vSeeds.push_back(CDNSSeedData("207.246.98.185", "207.246.98.185"));       // sys 1
+	vSeeds.push_back(CDNSSeedData("140.82.49.19", "140.82.49.19"));           // sys 2
+	vSeeds.push_back(CDNSSeedData("149.28.189.80", "149.28.189.80"));         // sys 3
 	
 
 
