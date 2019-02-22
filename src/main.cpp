@@ -2290,7 +2290,17 @@ int64_t GetBlockValue(int nHeight)
     } else {
         nSubsidy = 1 * COIN;
     }
-    return nSubsidy;
+
+      // Check if we reached the coin max supply.
+  	int64_t nMoneySupply = chainActive.Tip()->nMoneySupply;
+
+    if (nMoneySupply + nSubsidy >= Params().MaxMoneyOut())
+  		nSubsidy = Params().MaxMoneyOut() - nMoneySupply;
+
+  	if (nMoneySupply >= Params().MaxMoneyOut())
+  		nSubsidy = 0;
+
+  	return nSubsidy;
 }
 
 int64_t GetMasternodePayment(int nHeight, int64_t blockValue, int nMasternodeCount)
